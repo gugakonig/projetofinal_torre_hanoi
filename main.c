@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-
+#include "torre.h"
 
 void clear() {
 #ifdef _WIN32
@@ -32,22 +32,28 @@ int main() {
             instrucoes();
         }
         else if (funcao == 2) {
-            clear();
-            printf("implentação - torres\n");
-            printf("Pressione a tecla 'Enter' para retornar ao menu principal.\n");
-            getchar();
-            getchar();
+            int numerodediscos;
+            do {
+                printf("Escolha o número de discos (entrte %d e %d)", MINIMODEDISCOS, MAXIMODEDISCOS);
+                scanf("%d", &numerodediscos);
+                if (numerodediscos < MINIMODEDISCOS || numerodediscos > MAXIMODEDISCOS) {
+                    printf ("Número inválido! Pressione a tecla 'ENTER' para tentar novamente.\n");
+                    getchar(); getchar();
+                    clear();
+                }
+                 
+            } while (numerodediscos < MINIMODEDISCOS || numerodediscos > MAXIMODEDISCOS);
+            
+            jogar(numerodediscos);
+
         }
-        
         else if (funcao == 0) {
             clear();
             printf("Obrigado por jogar!\n\n");
         }
         else {
             printf("\nOpção Inválida! Pressione a tecla 'Enter' para tentar novamente!");
-
-            getchar();
-            getchar();
+            getchar(); getchar();
         }
 
     } while (funcao != 0);
@@ -64,7 +70,9 @@ void instrucoes() {
 
     printf("Como Jogar:\n");
     printf("  1. É possível mexer somente um disco por vez.\n");
-    printf("  2. Só e possível colocar um disco sobre outro quando a base for maior.\n");
+    printf("  2. Só é possível colocar um disco sobre outro quando a base for maior.\n");
+    printf("  3. Para sair do jogo, utilize a tecla 'Q' (quit)!\n");
+    printf("  4. Para reiniciar o jogo, utilize a tecla 'R' (reset)!\n");
     printf("Pressione a tecla 'Enter' para retornar ao menu principal!\n");
 
     getchar(); 
