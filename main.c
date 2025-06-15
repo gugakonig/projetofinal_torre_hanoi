@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <locale.h>
 #include "torre.h"
+#include "historico.h"
 
-void clear() {
+void clear()
+{
 #ifdef _WIN32
     system("cls");
 #else
@@ -12,11 +14,16 @@ void clear() {
 #endif
 }
 
-int main() {
+int main()
+{
     setlocale(LC_ALL, "Portuguese_Brazil.1252");
     int funcao;
+    Historico *listaHistorico = NULL;
 
-    do {
+    loadHistorico(&listaHistorico);
+
+    do
+    {
         clear();
         printf("            TORRE DE HANÓI              \n");
         printf("======================================\n\n");
@@ -28,53 +35,93 @@ int main() {
         printf("Digite sua opção: ");
         scanf("%d", &funcao);
 
-        if (funcao == 1) {
+        if (funcao == 1)
+        {
             instrucoes();
         }
-        else if (funcao == 2) {
+        else if (funcao == 2)
+        {
             int numerodediscos;
-            do {
-                printf("Escolha o número de discos (entrte %d e %d)", MINIMODEDISCOS, MAXIMODEDISCOS);
-                scanf("%d", &numerodediscos);
-                if (numerodediscos < MINIMODEDISCOS || numerodediscos > MAXIMODEDISCOS) {
-                    printf ("Número inválido! Pressione a tecla 'ENTER' para tentar novamente.\n");
-                    getchar(); getchar();
-                    clear();
-                }
-                 
-            } while (numerodediscos < MINIMODEDISCOS || numerodediscos > MAXIMODEDISCOS);
-            
-            jogar(numerodediscos);
+            char nomedoJogador[30];
+            char data[11];
 
-        }
-        else if (funcao == 0) {
             clear();
-            printf("Obrigado por jogar!\n\n");
-        }
-        else {
-            printf("\nOpção Inválida! Pressione a tecla 'Enter' para tentar novamente!");
-            getchar(); getchar();
-        }
+            printf("Insira seu nome: ");
+            scanf(" %49[^\n]", nomedoJogador);
+            printf("Digite a data (DD/MM/AAAA): ");
+            scanf(" %10s", data);
 
+            do
+            {
+                printf("Escolha o número de discos (entre %d e %d)", MINIMODEDISCOS, MAXIMODEDISCOS);
+                scanf("%d", &numerodediscos);
+            } while (numerodediscos < MINIMODEDISCOS || numerodediscos > MAXIMODEDISCOS);
+
+            jogar(numerodediscos, nomedoJogador, data, &listaHistorico);
+        }
+        else if (funcao == 3)
+        {
+            exibirHistorico(listaHistorico);
+        }
+        else if (funcao == 0)
+        {
+            clear();
+            printf("Obrigado por jogar! Até a próxima!\n\n");
+        }
+        else
+        {
+            printf("\nNúmero Inválido! Pressione a tecla 'Enter' para tentar novamente!");
+            getchar();
+            getchar();
+        }
     } while (funcao != 0);
 
+    liberarHistorico(listaHistorico);
     return 0;
 }
 
-void instrucoes() {
+void instrucoes()
+{
     clear();
     printf("           COMO JOGAR           \n");
     printf("================================\n\n");
-    printf("Objetivo:\n");
-    printf(" Mover todos os discos da haste inicial (A) para a haste de destino (C).\n\n");
+    printf("Objetivo Geral:\n");
+    printf(" Mover todos os discos da haste inicial (A) para a haste de destino (C) com o mínimo de movimentos.\n\n");
 
     printf("Como Jogar:\n");
     printf("  1. É possível mexer somente um disco por vez.\n");
-    printf("  2. Só é possível colocar um disco sobre outro quando a base for maior.\n");
-    printf("  3. Para sair do jogo, utilize a tecla 'Q' (quit)!\n");
-    printf("  4. Para reiniciar o jogo, utilize a tecla 'R' (reset)!\n");
+    printf("  2. Somente é possível colocar um disco sobre outro quando a base for maior.\n");
+    printf("  3. Para fazer o movimento dos discos entre as torres, devem ser utilizados as teclas A, B, C.\n");
+    printf("  4. Em primeiro caso, selecione a torre de origem (A) e depois a torre de destino (C). (Ex.: AC).\n");
+    printf("  5. Utilize a tecla 'Q' (Quit) para sair do jogo!\n");
+    printf("  6. Utilize a tecla 'R' (Reset) para reiniciar o jogo!\n\n");
     printf("Pressione a tecla 'Enter' para retornar ao menu principal!\n");
 
-    getchar(); 
+    getchar();
+    getchar();
+}
+
+void exibirHistorico(Historico *lista)
+{
+    clear();
+    printf("       HISÓRICO DE PARTIDAS         \n");
+    printf("================================\n\n");
+    if (lista == NULL)
+    {
+        printf("Nenhuma partida foi registrada até o momento!\n");
+    }
+    else
+    {
+        printf("%-20s / %-12s / %-7s / %s\n", "Jogador", "Data", "Discos", "Movimentos");
+        Historico *atual = lista;
+        while (atual != NULL)
+        {
+            printf("%-20s / %-12s / %-7d / %d\n",
+                   atual->nomedoJogador, atual->data, atual->modoJogo, atual->movimentos);
+            atual = atual->proximo;
+        }
+    }
+    printf("\n\nPressione a tecla 'Enter' para retornar ao menu principal!\n");
+    getchar();
     getchar();
 }

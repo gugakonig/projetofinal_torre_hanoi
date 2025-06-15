@@ -1,12 +1,14 @@
 #ifndef TORRE_H
 #define TORRE_H
+#include "historico.h"
 
 #define MAXIMODEDISCOS 5
 #define MINIMODEDISCOS 3
 #define NUMERODETORRES 3
 
-typedef struct {
-    int discos [MAXIMODEDISCOS];
+typedef struct
+{
+    int discos[MAXIMODEDISCOS];
     int topo;
 
 } TORRE;
@@ -16,11 +18,11 @@ void instrucoes();
 void carregarTorre(TORRE *torre);
 int organizarTorre(TORRE *torre, int disco);
 int desmontarTorre(TORRE *torre);
-int topo (TORRE *torre);
+int topo(TORRE *torre);
 void mostrarDisco(int tamanho, int larguraMax);
 void exibirTorres(TORRE torres[], int numeroDiscos);
 int indiceTorre(char letra);
 int jogoConcluido(TORRE *torreFinal, int numeroDiscos);
-void jogar(int numeroDiscos);
+void jogar(int numeroDiscos, const char *nome, const char *data, Historico **listaHistorico);
 
 #endif
