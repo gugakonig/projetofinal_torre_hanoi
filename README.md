@@ -88,7 +88,7 @@ TorreDeHanoi/
 Abra o terminal na pasta raiz do projeto e execute:
 
 ```
-gcc . main.c torre.c historico.c
+gcc main.c torre.c historico.c -o torre
 ```
 
 ---
