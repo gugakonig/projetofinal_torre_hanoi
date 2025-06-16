@@ -4,7 +4,6 @@
 #include "torre.h"
 #include "historico.h"
 
-
 void adicionarHistoricoLista(Historico **lista, const char *nome, const char *data, int quantDiscos, int movimentos)
 {
     Historico *registro = (Historico *)malloc(sizeof(Historico));
@@ -33,7 +32,11 @@ void salvarHistoricoArquivo(const char *nome, const char *data, int quantDiscos,
         perror("Não foi possível abrir o arquivo de histórico de partidas!");
         return;
     }
-    fprintf(arquivo, "%s / %s / %d / %d\n", nome, data, quantDiscos, movimentos);
+    fprintf(arquivo, "Jogador: %s\n", nome);
+    fprintf(arquivo, "Data: %s\n", data);
+    fprintf(arquivo, "Quantidade de Discos: %d\n", quantDiscos);
+    fprintf(arquivo, "Movimentos: %d\n\n", movimentos);
+
     fclose(arquivo);
 }
 

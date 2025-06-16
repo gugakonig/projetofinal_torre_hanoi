@@ -47,7 +47,7 @@ void mostrarDisco(int tamanho, int larguraMax)
 void exibirTorres(TORRE torres[], int numeroDiscos)
 {
     clear();
-    printf("\nTorre de Hanoi - %d discos\n\n", numeroDiscos);
+    printf("\nTORRE DE HANÓI - %d DISCOS:\n\n", numeroDiscos);
 
     for (int nivel = numeroDiscos - 1; nivel >= 0; nivel--)
     {
@@ -116,7 +116,7 @@ void jogar(int numeroDiscos, const char *nome, const char *data, Historico **lis
 
         if (jogoConcluido(&torres[2], numeroDiscos))
         {
-            printf("\nParanéns, %s! Jogo concluído com sucesso!\n", nome);
+            printf("\nParanéns, %s! Jogo concluído com sucesso!\n\n", nome);
 
             salvarHistoricoArquivo(nome, data, numeroDiscos, movimentos);
             adicionarHistoricoLista(listahistorico, nome, data, numeroDiscos, movimentos);
