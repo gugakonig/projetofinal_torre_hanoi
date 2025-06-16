@@ -64,13 +64,10 @@ TorreDeHanoi/
 ├── include/
 │   ├── torre.h
 │   ├── historico.h
-│   ├── menu.h
-│   └── pilha.h
+│   
 ├── src/
 │   ├── torre.c
 │   ├── historico.c
-│   ├── menu.c
-│   ├── pilha.c
 │   └── main.c
 └── README.md
 ```
@@ -81,7 +78,7 @@ TorreDeHanoi/
 
 ### 📌 Requisitos
 
-- Compilador C (como **gcc**, **clang** ou similar)  
+- Compilador C (como **gcc**)  
 - Ambiente com terminal compatível com ANSI (**Linux**, **WSL**, **macOS**)
 
 ---
@@ -91,7 +88,7 @@ TorreDeHanoi/
 Abra o terminal na pasta raiz do projeto e execute:
 
 ```
-gcc -o torreDeHanoi src/*.c -Iinclude
+gcc . main.c torre.c historico.c
 ```
 
 ---
@@ -101,15 +98,13 @@ gcc -o torreDeHanoi src/*.c -Iinclude
 Depois de compilar, execute o programa com:
 
 ```
-./torreDeHanoi
+./torre
 ```
 
 ---
 
-## ⚠️ Avisos
+## ⚠️ Aviso
 
-- O projeto foi desenvolvido para rodar em terminais compatíveis com ANSI (**Linux**, **WSL**, **macOS**).
-- Para rodar no **Windows nativo**, recomenda-se usar o **WSL** ou um terminal que suporte sequências ANSI.
 - O arquivo de histórico é salvo automaticamente no mesmo diretório do executável com o nome:
 
 ```
